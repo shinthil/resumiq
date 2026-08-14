@@ -9,8 +9,10 @@ from job_matcher import match_jobs
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
-app.config["UPLOAD_FOLDER"] = "uploads"
+app.config['UPLOAD_FOLDER'] = '/tmp/uploads'
 app.config["ALLOWED_EXTENSIONS"] = {"pdf", "docx", "txt"}
+
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 
 # ---------------------------------
