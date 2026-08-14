@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Resume Portal - Dashboard</title>
+    
+    <!-- Import Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* General Page Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* Same gradient background for consistency */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Card Container */
+        .dashboard-card {
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px; /* Slightly wider for file upload */
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Header Styles */
+        h2 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            color: #444;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* Styling for Text AND File Inputs */
+        input[type="text"], 
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px dashed #e1e1e1; /* Dashed border looks better for uploads */
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            background-color: #fafafa;
+            transition: border-color 0.3s ease;
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type="file"]:hover,
+        input[type="file"]:focus {
+            border-color: #667eea;
+            background-color: #f0f4ff;
+        }
+
+        /* Button Styles */
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s;
+        }
+
+        button:hover {
+            background: #5a6fd6;
+            transform: scale(1.02);
+        }
+
+        /* Footer/Copyright */
+        .footer-text {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-card">
+        <h2>Dashboard</h2>
+        <p class="subtitle">Upload your resume to get started</p>
+        
+        <!-- Added enctype required for file uploads -->
+        <form method="post" enctype="multipart/form-data" action="/dashboard">
+            <div class="form-group">
+                <label for="resume">Select Document (PDF, DOCX, TXT)</label>
+                <input type="file" id="resume" name="resume" accept=".pdf,.docx,.txt" required>
+            </div>
+            
+            <button type="submit">Analyze Resume</button>
+        </form>
+
+        <p class="footer-text">&copy; 2023 Smart Resume Systems</p>
+    </div>
+
+</body>
+</html>

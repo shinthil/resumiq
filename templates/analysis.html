@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Resume Portal - Analysis Results</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Poppins',sans-serif;
+            background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:flex-start;
+            padding:2rem;
+        }
+
+        .analysis-card{
+            background:white;
+            width:100%;
+            max-width:900px;
+            padding:2rem;
+            border-radius:12px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h2{
+            text-align:center;
+            margin-bottom:20px;
+            color:#333;
+        }
+
+        h3{
+            margin-top:25px;
+            margin-bottom:10px;
+            color:#667eea;
+        }
+
+        ul{
+            list-style:none;
+            padding:0;
+        }
+
+        li{
+            background:#f8f9fa;
+            margin-bottom:10px;
+            padding:10px;
+            border-radius:8px;
+            border-left:4px solid #667eea;
+        }
+
+        .score-box{
+            background:#f8f9fa;
+            padding:15px;
+            border-radius:10px;
+            margin-bottom:20px;
+        }
+
+        .progress{
+            width:100%;
+            background:#ddd;
+            border-radius:10px;
+            overflow:hidden;
+            height:25px;
+        }
+
+        .progress-bar{
+            height:100%;
+            background:#667eea;
+            color:white;
+            text-align:center;
+            line-height:25px;
+            font-weight:bold;
+        }
+
+        .job-card{
+            background:#f8f9fa;
+            padding:15px;
+            margin-bottom:15px;
+            border-radius:10px;
+            border-left:5px solid #667eea;
+        }
+
+        .match-score{
+            color:#667eea;
+            font-weight:bold;
+            font-size:18px;
+        }
+
+        .skill-tag{
+            display:inline-block;
+            background:#e8f0ff;
+            color:#333;
+            padding:5px 10px;
+            margin:3px;
+            border-radius:20px;
+            font-size:13px;
+        }
+
+        .missing-tag{
+            display:inline-block;
+            background:#ffe5e5;
+            color:#b00020;
+            padding:5px 10px;
+            margin:3px;
+            border-radius:20px;
+            font-size:13px;
+        }
+
+        .action-buttons{
+            text-align:center;
+            margin-top:30px;
+        }
+
+        .btn{
+            text-decoration:none;
+            padding:12px 24px;
+            border-radius:8px;
+            margin:0 10px;
+            font-weight:600;
+        }
+
+        .btn-primary{
+            background:#667eea;
+            color:white;
+        }
+
+        .btn-secondary{
+            background:#ddd;
+            color:#333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="analysis-card">
+
+    <h2>Hi {{ username }}, Here are your insights</h2>
+
+    <!-- ATS SCORE -->
+    <h3>📊 ATS Score</h3>
+
+    <div class="score-box">
+        <div class="progress">
+            <div class="progress-bar" style="width: {{ ats_score }}%;">
+                {{ ats_score }}%
+            </div>
+        </div>
+    </div>
+
+    <!-- ENTITIES -->
+    <h3>📝 Extracted Entities</h3>
+
+    <ul>
+        {% for ent in entities %}
+            <li>
+                {{ ent[0] }}
+                <small style="float:right;">
+                    {{ ent[1] }}
+                </small>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- SKILLS -->
+    <h3>💡 Skills Found</h3>
+
+    <ul>
+        {% for skill, score in skills %}
+            <li>
+                {{ skill }}
+                <strong style="float:right;">
+                    {{ score }}/10
+                </strong>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- JOB MATCHES -->
+    <h3>🚀 Recommended Jobs</h3>
+
+    {% for job in matches %}
+
+    <div class="job-card">
+
+        <h4>{{ job.title }}</h4>
+
+        <p class="match-score">
+            Match Score: {{ job.score }}%
+        </p>
+
+        <p>
+            <strong>Matched Skills:</strong>
+        </p>
+
+        {% if job.matched_skills %}
+            {% for skill in job.matched_skills %}
+                <span class="skill-tag">
+                    {{ skill }}
+                </span>
+            {% endfor %}
+        {% else %}
+            <p>No matched skills detected.</p>
+        {% endif %}
+
+        <br><br>
+
+        <p>
+            <strong>Missing Skills:</strong>
+        </p>
+
+        {% if job.missing_skills %}
+            {% for skill in job.missing_skills %}
+                <span class="missing-tag">
+                    {{ skill }}
+                </span>
+            {% endfor %}
+        {% else %}
+            <p>No missing skills.</p>
+        {% endif %}
+
+    </div>
+
+    {% endfor %}
+
+    <!-- FEEDBACK -->
+    <h3>🔍 Resume Feedback</h3>
+
+    <ul>
+        {% for fb in feedback %}
+            <li style="border-left-color:#ff6b6b;">
+                {{ fb }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="action-buttons">
+        <a href="/dashboard" class="btn btn-primary">
+            Analyze Another Resume
+        </a>
+
+        <a href="/" class="btn btn-secondary">
+            Logout
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>
